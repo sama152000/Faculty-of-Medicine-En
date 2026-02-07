@@ -12,6 +12,8 @@ export class FacultyOfMedicineComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    //aaaaaa
   }
 
 }
