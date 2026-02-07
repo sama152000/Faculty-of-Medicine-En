@@ -4,27 +4,45 @@
     <h2>{{ sectionTitle }}</h2>
   </div>
 
-  <!-- Departments Grid -->
-  <div class="departments-grid">
-    <div class="department-card" *ngFor="let department of departments; trackBy: trackByFn" (click)="onDepartmentClick(department)">
-      <div class="card-icon">
-        <img
-          [src]="department.departmentAttachments?.[0]?.url"
-          [alt]="department.subTitle"
-          class="icon-image"
-        >
-      </div>
-      <div class="card-content">
-        <h4 class="card-title">{{ department.name }}</h4>
-        <!-- <p class="card-description">{{ department.about }}</p> -->
+  <!-- Academic Departments -->
+  <div *ngIf="academicDepartments?.length">
+    <h3 class="dept-subtitle academic">Academic Departments</h3>
+    <div class="departments-grid">
+      <div class="department-card" 
+           *ngFor="let department of academicDepartments; trackBy: trackByFn" 
+           (click)="onDepartmentClick(department)">
+        <div class="card-icon">
+          <img
+            [src]="department.departmentAttachments?.[0]?.url"
+            [alt]="department.subTitle"
+            class="icon-image"
+          >
+        </div>
+        <div class="card-content">
+          <h4 class="card-title">{{ department.name }}</h4>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- All Services Button -->
-  <!-- <div class="all-services-section" *ngIf="showAllServicesButton">
-    <a class="all-services-btn" [routerLink]="allServicesUrl">
-      {{ allServicesText }}
-    </a>
-  </div> -->
+  <!-- Clinical Departments -->
+  <div *ngIf="clinicalDepartments?.length">
+    <h3 class="dept-subtitle clinical">Clinical Departments</h3>
+    <div class="departments-grid">
+      <div class="department-card" 
+           *ngFor="let department of clinicalDepartments; trackBy: trackByFn" 
+           (click)="onDepartmentClick(department)">
+        <div class="card-icon">
+          <img
+            [src]="department.departmentAttachments?.[0]?.url"
+            [alt]="department.subTitle"
+            class="icon-image"
+          >
+        </div>
+        <div class="card-content">
+          <h4 class="card-title">{{ department.name }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -90,4 +90,9 @@ export class DepartmentsService {
       map(services => services.filter(s => s.departmentId === departmentId))
     );
   }
+  getDepartmentsByType(type: 'AcademicDepartments' | 'ClinicalDepartments'): Observable<Department[]> {
+  return this.getAllDepartments().pipe(
+    map(departments => departments.filter(d => d.departmentType === type))
+  );
+}
 }

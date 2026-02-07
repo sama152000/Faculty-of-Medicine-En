@@ -8,8 +8,8 @@
         <!-- Background -->
         <div class="hero-background" [style.background-image]="'url(' + slide.imageUrl + ')'"></div>
 
-        <!-- Content (always center + fixed animation) -->
-        <div class="hero-content caption-center animated fadeInUp">
+        <!-- Content (right side caption) -->
+        <div class="hero-content caption-right align-center animated fadeInUp">
           <div class="hero-caption">
             <h1 class="hero-title">{{ slide.title }}</h1>
             <p class="hero-subtitle">{{ slide.subtitle }}</p>
@@ -21,10 +21,10 @@
 
     <!-- Controls -->
     <div class="hero-controls" *ngIf="slides.length > 1">
-      <button class="control-btn prev-btn" (click)="prevSlide()" aria-label="Previous Slide">
+      <button class="control-btn prev-btn" (click)="prevSlide()" aria-label="previous slide">
         <i class="fas fa-chevron-right"></i>
       </button>
-      <button class="control-btn next-btn" (click)="nextSlide()" aria-label="Next Slide">
+      <button class="control-btn next-btn" (click)="nextSlide()" aria-label="next slide">
         <i class="fas fa-chevron-left"></i>
       </button>
     </div>
@@ -35,7 +35,7 @@
               class="indicator"
               [class.active]="i === currentSlideIndex"
               (click)="goToSlide(i)"
-              [attr.aria-label]="'Go to slide ' + (i + 1)">
+              [attr.aria-label]="'Go to slide' + (i + 1)">
       </button>
     </div>
   </div>

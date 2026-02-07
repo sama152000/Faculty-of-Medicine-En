@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ContactService } from '../../../../Services/contact.service';
 import { LogoService } from '../../../../Services/logo.service';
 import { Contact } from '../../../../model/contact.model';
@@ -8,7 +9,7 @@ import { Logo } from '../../../../model/logo.model';
 @Component({
   selector: 'app-medicine-logo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './medicine-logo.component.html',
   styleUrls: ['./medicine-logo.component.css']
 })

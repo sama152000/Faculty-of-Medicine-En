@@ -24,6 +24,8 @@ export interface Department {
   name: string;
   subTitle: string;
   pageId: string;
+    departmentType: string;
+
   pageTitle: string;
   aboutId: string;
   about: string;

@@ -35,9 +35,9 @@
   flex-shrink: 0;
 
   .logo-image {
-    height: 60px;
+    height: 100px;
     width: 90px; /* Fixed width for consistency */
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 8px;
     transition: transform 0.3s ease;
     cursor: pointer;

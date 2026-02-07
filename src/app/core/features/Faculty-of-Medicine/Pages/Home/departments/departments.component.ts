@@ -13,7 +13,7 @@ import { slugify } from '../../../../../../utils/slugify';
   styleUrls: ['./departments.component.css']
 })
 export class DepartmentsComponent implements OnInit {
-  @Input() sectionTitle = 'Academic Departments';
+  @Input() sectionTitle = 'Departments';
   @Input() showAllServicesButton = true;
   @Input() allServicesText = 'All Departments';
   @Input() allServicesUrl = '/departments';
@@ -21,6 +21,8 @@ export class DepartmentsComponent implements OnInit {
   @Output() departmentClicked = new EventEmitter<Department>();
 
   departments: Department[] = [];
+  academicDepartments: Department[] = [];
+  clinicalDepartments: Department[] = [];
 
   constructor(
     private departmentService: DepartmentsService,
@@ -37,11 +39,21 @@ export class DepartmentsComponent implements OnInit {
 
   private loadDepartments(): void {
     this.departmentService.getAllDepartments().subscribe(departments => {
-      this.departments = departments.slice(0, 6);
+      this.departments = departments;
+
+      // فلترة الأقسام حسب النوع
+      this.academicDepartments = departments
+        .filter(d => d.departmentType === 'AcademicDepartments')
+        .slice(0, 3);
+
+      this.clinicalDepartments = departments
+        .filter(d => d.departmentType === 'ClinicalDepartments')
+        .slice(0, 3);
     });
   }
 
-   onDepartmentClick(department: Department): void
-  { this.departmentClicked.emit(department); 
-    this.router.navigate(['/departments', slugify(department.name)]); }
+  onDepartmentClick(department: Department): void {
+    this.departmentClicked.emit(department);
+    this.router.navigate(['/departments', slugify(department.name)]);
+  }
 }

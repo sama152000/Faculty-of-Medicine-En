@@ -128,28 +128,28 @@ export class MenuService {
     ];
   }
 
+
   private buildDepartmentColumns(departments: any[]): MenuTab[] {
-    const scientificDept: any[] = [];
+    const academicDept: any[] = [];
     const clinicalDept: any[] = [];
 
-    // Divide departments based on the word "Science"
+    // تقسيم الأقسام بناءً على departmentType
     departments.forEach(department => {
-      const category = this.getDefaultCategory(department);
-      if (category === 'scientific') {
-        scientificDept.push(department);
-      } else {
+      if (department.departmentType === 'AcademicDepartments') {
+        academicDept.push(department);
+      } else if (department.departmentType === 'ClinicalDepartments') {
         clinicalDept.push(department);
       }
     });
 
     const columns: MenuTab[] = [];
 
-    if (scientificDept.length > 0) {
+    if (academicDept.length > 0) {
       columns.push({
         id: 100,
         title: 'Academic Departments',
         isActive: false,
-        childs: scientificDept.map(department => ({
+        childs: academicDept.map(department => ({
           id: parseInt(department.id),
           title: department.name,
           target: `/departments/${slugify(department.name)}`,
@@ -173,15 +173,6 @@ export class MenuService {
     }
 
     return columns;
-  }
-
-  private getDefaultCategory(department: any): string {
-    // If the name contains the word "Science" then Academic
-    if (department.name.includes('Science')) {
-      return 'scientific';
-    }
-    // Otherwise Clinical
-    return 'clinical';
   }
 
   getMenuTabs(): Observable<MenuTab[]> {
