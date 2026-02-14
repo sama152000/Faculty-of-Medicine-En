@@ -7,11 +7,13 @@ import { NewsService } from '../../Services/news.service';
 import { Sector, SectorDetail, SectorMember, SectorProgram, SectorService, SectorPost, SectorUnit } from '../../model/sector.model';
 import { News } from '../../model/news.model';
  import { slugify } from '../../../../../../../src/app/utils/slugify';
+ import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-sectors',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CleanHtmlPipe],
   templateUrl: './sectors.component.html',
   styleUrls: ['./sectors.component.css']
 })

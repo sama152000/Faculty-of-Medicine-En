@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeanSpeechService } from '../../../Services/dean.service';
 import { DeanSpeech } from '../../../model/dean-info.model';
+import { CleanHtmlPipe } from '../../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-dean-speech',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe],
   templateUrl: './dean-speech.component.html',
   styleUrls: ['./dean-speech.component.css']
 })

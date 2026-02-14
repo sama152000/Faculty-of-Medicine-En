@@ -65,32 +65,41 @@
         <div class="col-md-9">
           <div class="card">
             <div class="card-body">
-              <div *ngIf="activeAboutSection === 'overview'">
-                <h3 class="text-brown mb-3">Overview</h3>
-                <p>{{ about?.content }}</p>
-              </div>
+             <div *ngIf="activeAboutSection === 'overview'">
+  <h3 class="text-brown mb-3">Overview</h3>
+  <div class="quill-content description"
+       [innerHTML]="about?.content | cleanHtml">
+  </div>
+</div>
 
-              <div *ngIf="activeAboutSection === 'vision'">
-                <h3 class="text-brown mb-3">Vision</h3>
-                <p>{{ about?.vision }}</p>
-              </div>
+<div *ngIf="activeAboutSection === 'vision'">
+  <h3 class="text-brown mb-3">Vision</h3>
+  <div class="quill-content description"
+       [innerHTML]="about?.vision | cleanHtml">
+  </div>
+</div>
 
-              <div *ngIf="activeAboutSection === 'mission'">
-                <h3 class="text-brown mb-3">Mission</h3>
-                <p>{{ about?.mission }}</p>
-              </div>
+<div *ngIf="activeAboutSection === 'mission'">
+  <h3 class="text-brown mb-3">Mission</h3>
+  <div class="quill-content description"
+       [innerHTML]="about?.mission | cleanHtml">
+  </div>
+</div>
 
-              <div *ngIf="activeAboutSection === 'history'">
-                <h3 class="text-brown mb-3">History</h3>
-                <p>{{ about?.history }}</p>
-              </div>
+<div *ngIf="activeAboutSection === 'history'">
+  <h3 class="text-brown mb-3">History</h3>
+  <div class="quill-content description"
+       [innerHTML]="about?.history | cleanHtml">
+  </div>
+</div>
 
-              <div *ngIf="activeAboutSection === 'objectives'">
-                <h3 class="text-brown mb-3">Objectives</h3>
-                <ul>
-                  <li *ngFor="let goal of about?.goals">{{ goal.goalName }}</li>
-                </ul>
-              </div>
+<div *ngIf="activeAboutSection === 'objectives'">
+  <h3 class="text-brown mb-3">Objectives</h3>
+  <ul>
+    <li *ngFor="let goal of about?.goals">{{ goal.goalName }}</li>
+  </ul>
+</div>
+
             </div>
           </div>
         </div>

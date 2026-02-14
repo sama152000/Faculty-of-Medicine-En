@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UnitsService } from '../../Services/units.service';
 import { Unit, UnitDetail, UnitMember } from '../../model/unit.model';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-units',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe],
   templateUrl: './units.component.html',
   styleUrls: ['./units.component.css']
 })

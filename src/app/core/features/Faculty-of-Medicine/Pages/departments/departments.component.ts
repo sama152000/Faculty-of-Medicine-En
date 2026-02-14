@@ -4,11 +4,13 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DepartmentsService } from '../../Services/departments.service';
 import { Department, DepartmentDetail, DepartmentProgram, DepartmentService, DepartmentMember } from '../../model/department.model';
 import { slugify } from '../../../../../utils/slugify';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-departments',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })

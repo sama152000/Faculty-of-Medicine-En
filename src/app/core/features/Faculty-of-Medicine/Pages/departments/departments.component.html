@@ -7,6 +7,7 @@
   <!-- Horizontal Tabs -->
   <div class="medicine-tabs">
     <ul class="nav nav-tabs">
+      <!-- About & Details Tabs -->
       <!-- <li class="nav-item">
         <button class="nav-link" [class.active]="activeTab === 'about'" (click)="switchTab('about')" type="button">
           About the Department
@@ -17,6 +18,7 @@
           Department Details
         </button>
       </li> -->
+      <!-- Programs Tab -->
       <!-- <li class="nav-item">
         <button class="nav-link" [class.active]="activeTab === 'programs'" (click)="switchTab('programs')" type="button">
           Department Programs
@@ -36,7 +38,110 @@
   </div>
 
   <!-- Content Area -->
-  <div class="row">
+  <!-- <div class="row"> -->
+    <!-- About Tab Content -->
+    <!-- <div *ngIf="activeTab === 'about'" class="col-12">
+      <div class="row">
+
+        <!-- <div class="col-md-3 mb-4">
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'overview'" (click)="switchAboutSection('overview')">
+              Overview
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'vision'" (click)="switchAboutSection('vision')">
+              Vision
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'mission'" (click)="switchAboutSection('mission')">
+              Mission
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'history'" (click)="switchAboutSection('history')">
+              History
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'objectives'" (click)="switchAboutSection('objectives')">
+              Objectives
+            </button>
+          </div>
+        </div>  -->
+
+        <!-- Content -->
+        <!-- <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div *ngIf="activeAboutSection === 'overview'">
+                <h3 class="text-brown mb-3">Overview</h3>
+                <div class="quill-content description"
+                     [innerHTML]="department?.about | cleanHtml"></div>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'vision'">
+                <h3 class="text-brown mb-3">Vision</h3>
+                <div class="quill-content description"
+                     [innerHTML]="department?.vision | cleanHtml"></div>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'mission'">
+                <h3 class="text-brown mb-3">Mission</h3>
+                <div class="quill-content description"
+                     [innerHTML]="department?.mission | cleanHtml"></div>
+              </div>
+
+           
+
+              <div *ngIf="activeAboutSection === 'objectives'">
+                <h3 class="text-brown mb-3">Objectives</h3>
+                <ul>
+                  <li *ngFor="let goal of department?.goals">{{ goal.goalName }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    <!-- </div> -->
+
+    <!-- Details Tab Content -->
+    <!-- <div *ngIf="activeTab === 'details'" class="col-12">
+      <div class="card" *ngIf="departmentDetail?.title || departmentDetail?.content">
+        <div class="card-body">
+          <h3 class="text-brown mb-3">{{ departmentDetail?.title }}</h3>
+          <div class="quill-content description"
+               [innerHTML]="departmentDetail?.content | cleanHtml"></div>
+        </div>
+      </div>
+      <p *ngIf="!departmentDetail?.title && !departmentDetail?.content">No information available.</p>
+    </div> -->
+
+    <!-- Programs Tab Content -->
+    <!-- <div *ngIf="activeTab === 'programs'" class="col-12">
+      <div class="row">
+        <div class="col-md-3 mb-4">
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action"
+              *ngFor="let program of departmentPrograms"
+              [class.active]="selectedProgram?.id === program.id"
+              (click)="selectProgram(program)">
+              {{ program.name }}
+            </button>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="card" *ngIf="selectedProgram">
+            <div class="card-body">
+              <h3 class="text-brown mb-3">{{ selectedProgram.name }}</h3>
+              <p><strong>Program Name:</strong> {{ selectedProgram.programName }}</p>
+              <p><strong>Department:</strong> {{ selectedProgram.departmentName }}</p>
+              <a [routerLink]="['/programs', selectedProgram.programId]" class="btn btn-medicine">View Program</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <!-- Services Tab Content -->
     <div *ngIf="activeTab === 'services'" class="col-12">
       <div class="row">
@@ -98,6 +203,3 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>

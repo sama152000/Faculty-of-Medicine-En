@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProgramsService } from '../../Services/programs.service';
 import { Program, ProgramDetail, ProgramMember } from '../../model/program.model';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-programs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
   templateUrl: './programs.component.html',
   styleUrls: ['./programs.component.css']
 })

@@ -1,6 +1,6 @@
 <div class="container section">
   <!-- Unit Title Section -->
-  <div class="sector-header  text-white p-4 mb-4 rounded">
+  <div class="sector-header text-white p-4 mb-4 rounded">
     <h1 class="text-brown">{{ unit?.unitTitle || 'Loading data...' }}</h1>
   </div>
 
@@ -12,7 +12,6 @@
           About the Unit
         </button>
       </li>
-     
       <li class="nav-item">
         <button class="nav-link" [class.active]="activeTab === 'services'" (click)="switchTab('services')" type="button">
           Unit Details
@@ -59,18 +58,21 @@
             <div class="card-body">
               <div *ngIf="activeAboutSection === 'overview'">
                 <h3 class="text-brown mb-3">Overview</h3>
-                <p *ngIf="unit?.content">{{ unit?.content }}</p>
+                <div *ngIf="unit?.content" class="quill-content description"
+                     [innerHTML]="unit?.content | cleanHtml"></div>
                 <p *ngIf="!unit?.content">No information available about the unit.</p>
               </div>
 
               <div *ngIf="activeAboutSection === 'vision'">
                 <h3 class="text-brown mb-3">Vision</h3>
-                <p>{{ unit?.vision }}</p>
+                <div class="quill-content description"
+                     [innerHTML]="unit?.vision | cleanHtml"></div>
               </div>
 
               <div *ngIf="activeAboutSection === 'mission'">
                 <h3 class="text-brown mb-3">Mission</h3>
-                <p>{{ unit?.mission }}</p>
+                <div class="quill-content description"
+                     [innerHTML]="unit?.mission | cleanHtml"></div>
               </div>
 
               <div *ngIf="activeAboutSection === 'objectives'">
@@ -90,7 +92,8 @@
       <div class="card" *ngIf="unitDetail?.title || unitDetail?.content || unitDetail?.unitPlace">
         <div class="card-body">
           <h3 class="text-brown mb-3">{{ unitDetail?.title }}</h3>
-          <p class="mb-3">{{ unitDetail?.content }}</p>
+          <div class="quill-content description mb-3"
+               [innerHTML]="unitDetail?.content | cleanHtml"></div>
           <p><strong>Location:</strong> {{ unitDetail?.unitPlace }}</p>
         </div>
       </div>

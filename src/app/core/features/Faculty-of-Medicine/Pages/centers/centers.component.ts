@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CentersService } from '../../Services/centers.service';
 import { Center, CenterDetail, CenterMember } from '../../model/center.model';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
 @Component({
   selector: 'app-centers',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
   templateUrl: './centers.component.html',
   styleUrls: ['./centers.component.css']
 })

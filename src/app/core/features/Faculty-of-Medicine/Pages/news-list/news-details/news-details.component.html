@@ -26,10 +26,10 @@
 
         <!-- Article Content -->
         <div class="article-content">
-          <div class="content-body">
-            {{ news.content }}
-          </div>
-          
+          <div class="content-body quill-content description"
+     [innerHTML]="news.content | cleanHtml">
+</div>
+
           <!-- Tags -->
           <div class="article-tags mt-4" *ngIf="news.tags && news.tags.length > 0">
             <strong class="me-2">Keywords:</strong>

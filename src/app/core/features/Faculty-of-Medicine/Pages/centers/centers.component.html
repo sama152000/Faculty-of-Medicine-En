@@ -73,18 +73,21 @@
             <div class="card-body">
               <div *ngIf="activeAboutSection === 'overview'">
                 <h3 class="text-brown mb-3">Overview</h3>
-                <p *ngIf="center?.about">{{ center?.about }}</p>
+                <div *ngIf="center?.about" class="quill-content description"
+                     [innerHTML]="center?.about | cleanHtml"></div>
                 <p *ngIf="!center?.about">No information available about the center.</p>
               </div>
 
               <div *ngIf="activeAboutSection === 'vision'">
                 <h3 class="text-brown mb-3">Vision</h3>
-                <p>{{ center?.vision }}</p>
+                <div class="quill-content description"
+                     [innerHTML]="center?.vision | cleanHtml"></div>
               </div>
 
               <div *ngIf="activeAboutSection === 'mission'">
                 <h3 class="text-brown mb-3">Mission</h3>
-                <p>{{ center?.mission }}</p>
+                <div class="quill-content description"
+                     [innerHTML]="center?.mission | cleanHtml"></div>
               </div>
 
               <div *ngIf="activeAboutSection === 'objectives'">
@@ -104,8 +107,10 @@
       <div class="card" *ngIf="centerDetail?.title || centerDetail?.description || centerDetail?.content">
         <div class="card-body">
           <h3 class="text-brown mb-3">{{ centerDetail?.title }}</h3>
-          <p class="mb-3">{{ centerDetail?.description }}</p>
-          <p>{{ centerDetail?.content }}</p>
+          <div class="quill-content description mb-3"
+               [innerHTML]="centerDetail?.description | cleanHtml"></div>
+          <div class="quill-content description"
+               [innerHTML]="centerDetail?.content | cleanHtml"></div>
         </div>
       </div>
       <p *ngIf="!centerDetail?.title && !centerDetail?.description && !centerDetail?.content">No information available.</p>

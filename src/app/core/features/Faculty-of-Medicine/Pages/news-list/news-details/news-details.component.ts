@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../../Services/news.service';
 import { News } from '../../../model/news.model';
 import { slugify } from '../../../../../../utils/slugify';
+import { CleanHtmlPipe } from '../../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
 @Component({
   selector: 'app-news-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
   templateUrl: './news-details.component.html',
   styleUrls: ['./news-details.component.css']
 })

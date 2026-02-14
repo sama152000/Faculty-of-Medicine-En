@@ -23,8 +23,10 @@
 
     <div class="message-section">
       <div class="message-content">
-        
-        <div class="message-text" [innerHTML]="displayedMessage"></div>
+        <!-- ✅ عرض كلمة العميد باستخدام innerHTML + cleanHtml -->
+        <div class="message-text quill-content description"
+             [innerHTML]="deanSpeech?.speech | cleanHtml">
+        </div>
       </div>
     </div>
   </div>

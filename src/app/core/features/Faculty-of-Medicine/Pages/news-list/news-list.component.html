@@ -46,7 +46,10 @@
             </span>
           </div>
           <h5 class="news-card-title">{{ newsItem.title }}</h5>
-          <p class="news-card-excerpt">{{ newsItem.content | slice:0:120 }}...</p>
+          <!-- ✅ عرض المحتوى باستخدام innerHTML + cleanHtml -->
+          <div class="news-card-excerpt quill-content description"
+               [innerHTML]="(newsItem.content | cleanHtml) | slice:0:120">
+          </div>
           <div class="d-flex justify-content-between align-items-center">
             <button class="btn btn-medicine btn-sm">Read More</button>
           </div>
