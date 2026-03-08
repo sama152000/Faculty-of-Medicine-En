@@ -8,23 +8,18 @@
   <div class="medicine-tabs">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <button 
-          class="nav-link" 
-          [class.active]="activeTab === 'about'"
-          (click)="switchTab('about')"
-          type="button"
-        >
+        <button class="nav-link" [class.active]="activeTab === 'about'" (click)="switchTab('about')" type="button">
           About the Faculty
         </button>
       </li>
       <li class="nav-item">
-        <button
-          class="nav-link"
-          [class.active]="activeTab === 'members'"
-          (click)="switchTab('members')"
-          type="button"
-        >
+        <button class="nav-link" [class.active]="activeTab === 'members'" (click)="switchTab('members')" type="button">
           Faculty Administration
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" [class.active]="activeTab === 'orders'" (click)="switchTab('orders')" type="button">
+          Faculty Council Decisions
         </button>
       </li>
     </ul>
@@ -65,41 +60,36 @@
         <div class="col-md-9">
           <div class="card">
             <div class="card-body">
-             <div *ngIf="activeAboutSection === 'overview'">
-  <h3 class="text-brown mb-3">Overview</h3>
-  <div class="quill-content description"
-       [innerHTML]="about?.content | cleanHtml">
-  </div>
-</div>
+              <div *ngIf="activeAboutSection === 'overview'">
+                <h3 class="text-brown mb-3">Overview</h3>
+                <div class="quill-content description" [innerHTML]="about?.content | cleanHtml">
+                </div>
+              </div>
 
-<div *ngIf="activeAboutSection === 'vision'">
-  <h3 class="text-brown mb-3">Vision</h3>
-  <div class="quill-content description"
-       [innerHTML]="about?.vision | cleanHtml">
-  </div>
-</div>
+              <div *ngIf="activeAboutSection === 'vision'">
+                <h3 class="text-brown mb-3">Vision</h3>
+                <div class="quill-content description" [innerHTML]="about?.vision | cleanHtml">
+                </div>
+              </div>
 
-<div *ngIf="activeAboutSection === 'mission'">
-  <h3 class="text-brown mb-3">Mission</h3>
-  <div class="quill-content description"
-       [innerHTML]="about?.mission | cleanHtml">
-  </div>
-</div>
+              <div *ngIf="activeAboutSection === 'mission'">
+                <h3 class="text-brown mb-3">Mission</h3>
+                <div class="quill-content description" [innerHTML]="about?.mission | cleanHtml">
+                </div>
+              </div>
 
-<div *ngIf="activeAboutSection === 'history'">
-  <h3 class="text-brown mb-3">History</h3>
-  <div class="quill-content description"
-       [innerHTML]="about?.history | cleanHtml">
-  </div>
-</div>
+              <div *ngIf="activeAboutSection === 'history'">
+                <h3 class="text-brown mb-3">History</h3>
+                <div class="quill-content description" [innerHTML]="about?.history | cleanHtml">
+                </div>
+              </div>
 
-<div *ngIf="activeAboutSection === 'objectives'">
-  <h3 class="text-brown mb-3">Objectives</h3>
-  <ul>
-    <li *ngFor="let goal of about?.goals">{{ goal.goalName }}</li>
-  </ul>
-</div>
-
+              <div *ngIf="activeAboutSection === 'objectives'">
+                <h3 class="text-brown mb-3">Objectives</h3>
+                <ul>
+                  <li *ngFor="let goal of about?.goals">{{ goal.goalName }}</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -112,15 +102,12 @@
         <div class="card-body">
           <h3 class="text-brown mb-3">Faculty Administration</h3>
 
-          <!-- Dean -->
+          <!-- Faculty Dean -->
           <div *ngIf="president" class="mb-4">
-            <h5 class="text-primary">Dean of the Faculty</h5>
+            <h5 class="text-primary">Faculty Dean</h5>
             <div class="d-flex align-items-center gap-3">
-              <img *ngIf="president.memberAttachments?.length"
-                   [src]="president.memberAttachments[0].url"
-                   alt="{{ president.fullName }}"
-                   class="img-thumbnail me-4"
-                   style="width:80px;height:80px;">
+              <img *ngIf="president.memberAttachments?.length" [src]="president.memberAttachments[0].url"
+                alt="{{ president.fullName }}" class="img-thumbnail me-4" style="width:80px;height:80px;">
               <div>
                 <p class="mb-1"><strong>{{ president.fullName }}</strong></p>
                 <p class="mb-1">{{ president.position }}</p>
@@ -133,7 +120,7 @@
           <div *ngIf="members && members.length > 0">
             <h5 class="text-primary">Faculty Administration Members</h5>
             <div class="row">
-              <div class="col-md-6 mb-3" *ngFor="let member of members">
+              <div class="col-md-6 mb-3" *ngFor="let member of paginatedMembers">
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">{{ member.fullName }}</h6>
@@ -143,13 +130,68 @@
                 </div>
               </div>
             </div>
+
+            <!-- Pagination -->
+            <div *ngIf="totalPages > 1" class="d-flex justify-content-center mt-4">
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="previousPage()" [disabled]="currentPage === 1">
+                      &laquo; Previous
+                    </button>
+                  </li>
+                  <li class="page-item" *ngFor="let page of getVisiblePages()" [class.active]="currentPage === page">
+                    <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                      Next &raquo;
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div *ngIf="totalPages > 1" class="text-center text-muted mt-2">
+              <small>Page {{ currentPage }} of {{ totalPages }} - ({{ members.length }} members)</small>
+            </div>
           </div>
 
           <div *ngIf="!president && (!members || members.length === 0)">
-            <p>No information available about the faculty administration.</p>
+            <p>No information available about faculty administration.</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Custom Pages Tab Content -->
+    <div *ngIf="activeTab === 'orders'" class="col-12">
+      <div *ngIf="decisionsPages && decisionsPages.length > 0; else noPages">
+        <div class="row">
+          <div class="col-md-6 mb-4" *ngFor="let page of decisionsPages">
+            <div class="card h-100">
+              <div class="card-body">
+
+                <h3 class="text-brown mb-3">{{ page.subTitle }}</h3>
+                <div [innerHTML]="page.content | cleanHtml:{ stripStyles: false, stripClasses: false }"></div>
+                <!-- Attachments -->
+                <div *ngIf="page.pageAttachments?.length">
+                  <h5 class="mt-4">Attachments:</h5>
+                  <div class="attachments-container"> 
+                    <a *ngFor="let attachment of page.pageAttachments"
+                      [href]="attachment.url" download class="attachment-download"> 
+                      <i class="bi bi-download"></i>{{ attachment.fileName }} 
+                    </a> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <ng-template #noPages>
+        <p class="text-center text-muted py-5">No custom pages available at the moment.</p>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceDetail } from '../../model/service.model';
 import { ServiceService } from '../../Services/service.service';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe';
+import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe, SafeHtmlPipe],
   templateUrl: './services.component.html',
-  styleUrls: ['./services.component.css']
+  styleUrls: ['./services.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ServicesComponent implements OnInit {
   service?: ServiceDetail;
   services: ServiceDetail[] = [];
   isListView: boolean = false;
   activeTab: string = 'departments';
-  activeAboutSection: string = 'overview';
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +28,7 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const slug = params['slug']; // نقرأ الـ slug بدل الـ id
+      const slug = params['slug'];
       if (slug) {
         this.isListView = false;
         this.loadServiceData(slug);
@@ -69,51 +71,11 @@ export class ServicesComponent implements OnInit {
     return item.id;
   }
 
-  onServiceClick(service: ServiceDetail): void {
-    if (service && service.title) {
-      this.router.navigate(['/services', service.title]); // نوجّه بالـ slug
-    }
-  }
-  
-  formatDescription(description: string): string {
-  if (!description) return '';
-
-  // Outpatient Clinics Schedule
-  if (description.includes('Outpatient Clinics Schedule')) {
-    const parts = description.split('Outpatient Clinics Schedule');
-    const tableText = parts[1].trim();
-    const lines = tableText.split('\n').filter(line => line.trim() !== '');
-    const headers = lines[0].split('\t');
-    const rows = lines.slice(1).map(line => line.split('\t'));
-
-    let tableHtml = '<table class="table table-bordered table-striped">';
-    tableHtml += '<thead><tr>';
-    headers.forEach(h => tableHtml += `<th>${h}</th>`);
-    tableHtml += '</tr></thead><tbody>';
-    rows.forEach(row => {
-      tableHtml += '<tr>';
-      row.forEach(cell => tableHtml += `<td>${cell}</td>`);
-      tableHtml += '</tr>';
-    });
-    tableHtml += '</tbody></table>';
-
-    return parts[0] + '<br><br><strong>Outpatient Clinics Schedule</strong><br>' + tableHtml;
-  }
-
-  // Available Medical Tests or Available Imaging Services
-  if (description.includes('Available Medical Tests') || description.includes('Available Imaging Services')) {
-    const lines = description.split('\n').filter(line => line.trim() !== '');
-    let listHtml = '<ul class="styled-list">';
-    lines.forEach(line => {
-      if (!line.includes('Available') && !line.includes('Services')) {
-        listHtml += `<li>${line}</li>`;
-      }
-    });
-    listHtml += '</ul>';
-    return description.split('\n')[0] + '<br><br>' + listHtml;
-  }
-
-  return description;
-}
-
+  // onServiceClick(service: ServiceDetail): void {
+  //   if (service) {
+  //     // navigate using slug if available, otherwise slugify title
+  //     const slug = slugify(service.slug || service.title || '');
+  //     this.router.navigate(['/services', slug]);
+  //   }
+  // }
 }

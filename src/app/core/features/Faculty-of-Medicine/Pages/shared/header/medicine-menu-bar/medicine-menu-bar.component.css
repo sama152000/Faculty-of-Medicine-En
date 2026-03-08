@@ -18,6 +18,7 @@
   z-index: 1000;
   padding: 0.5rem 0;
   width: 100%;
+   direction:ltr;
 
 }
 
@@ -79,7 +80,7 @@
 .menu-nav {
   display: flex;
   align-items: center;
-  justify-content: flex-Start;
+  justify-content: flex-end;
   width: 100%;
 
   &.mobile {
@@ -246,11 +247,11 @@
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   padding: 1rem;
-  min-width: 480px;
+  min-width: 700px;
   max-width: 95vw;
   position: absolute;
   top: 100%;
-  left: 0;
+  /* right: 0; */
   z-index: 1001;
   opacity: 0;
   visibility: hidden;
@@ -272,11 +273,44 @@
   min-width: 0;
 }
 
+.column-title-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: 2px solid var(--medicine-primary-red);
+    outline-offset: -2px;
+    border-radius: 4px;
+  }
+
+  i {
+    transition: transform 0.3s ease;
+    color: var(--medicine-primary-red);
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 .column-title {
   color: var(--medicine-menu-dropdown-text);
   font-weight: 600;
   font-size: 0.9rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
   padding: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -285,10 +319,24 @@
 .column-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0.5rem 0 0 0;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: slideDown 0.3s ease;
 
   li {
     margin: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -309,6 +357,77 @@
 }
 .dropdown-columns.show {
   pointer-events: auto;
+}
+
+/* Third Level Dropdown (Sub-Submenu) */
+.dropdown-submenu {
+  background: var(--medicine-light-beige);
+  border: 1px solid var(--medicine-menu-dropdown-border);
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem 0;
+  min-width: 200px;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  margin-right: 0.5rem;
+  list-style: none;
+  display: block !important;
+
+  &.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(0);
+  }
+
+  li {
+    margin: 0;
+  }
+}
+
+.dropdown-submenu-item {
+  color: var(--medicine-menu-dropdown-text);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: block;
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--medicine-menu-dropdown-hover-bg);
+    color: var(--medicine-menu-dropdown-text);
+    transform: translateX(-2px);
+  }
+
+  &.active-sub-submenu-item {
+    background: var(--medicine-menu-active-bg);
+    color: var(--medicine-menu-active-text);
+  }
+}
+
+.has-sub-dropdown {
+  position: relative;
+
+  > .dropdown-item {
+    position: relative;
+
+    &::after {
+      content: "\f104";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }
 
 /* ===============================
@@ -391,9 +510,11 @@
   }
 
   .dropdown-item {
-    margin: 0 0.5rem;
+    margin: 0;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
 
     &:hover {
       background: rgba(255, 255, 255, 0.5);

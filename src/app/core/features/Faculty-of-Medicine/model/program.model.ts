@@ -17,6 +17,7 @@ export interface Program {
   id: string;
   pageId: string;
   pageTitle: string;
+  slug:string;
   aboutId: string;
   about: string;
   mission: string;

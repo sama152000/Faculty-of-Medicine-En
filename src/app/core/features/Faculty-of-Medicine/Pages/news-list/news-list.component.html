@@ -5,30 +5,49 @@
     <p class="text-muted">Follow the latest news, events, and conferences at the Faculty of Medicine, Luxor University</p>
   </div>
 
-  <!-- Filter Tabs -->
-  <div class="medicine-tabs">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <button class="nav-link" [class.active]="activeFilter === 'all'" (click)="filterNews('all')" type="button">
-          All News
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <div class="filter-buttons">
+      <!-- All News Button -->
+      <button class="btn btn-outline-primary"
+              [class.active]="activeFilter === 'all'"
+              (click)="filterNews('all')">
+        All News
+      </button>
+
+      <!-- Dropdown for Categories -->
+      <div class="dropdown filter-dropdown">
+        <button class="btn dropdown-toggle"
+                type="button"
+                id="categoryDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+          {{ activeFilter !== 'all' ? activeFilter : 'Select Category' }}
         </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" [class.active]="activeFilter === 'news'" (click)="filterNews('news')" type="button">
-          News
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" [class.active]="activeFilter === 'conferences'" (click)="filterNews('conferences')" type="button">
-          Conferences
-        </button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" [class.active]="activeFilter === 'events'" (click)="filterNews('events')" type="button">
-          Events
-        </button>
-      </li>
-    </ul>
+        <ul class="dropdown-menu" aria-labelledby="categoryDropdown" *ngIf="categories.length > 0">
+          <li *ngFor="let cat of categories">
+            <button class="dropdown-item"
+                    [class.active]="activeFilter === cat.name"
+                    (click)="filterNews(cat.name)">
+              {{ cat.name }}
+            </button>
+          </li>
+        </ul>
+        <ul class="dropdown-menu" aria-labelledby="categoryDropdown" *ngIf="categories.length === 0">
+          <li><span class="dropdown-item-text text-muted">Loading...</span></li>
+        </ul>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-wrapper">
+        <!-- <i class="fas fa-search search-icon"></i> -->
+        <input type="text"
+               class="form-control"
+               placeholder="Search news..."
+               [(ngModel)]="searchTerm"
+               (input)="applySearch()" />
+      </div>
+    </div>
   </div>
 
   <!-- News Grid -->
@@ -41,12 +60,13 @@
         <div class="news-card-body">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div class="news-card-date">{{ newsItem.createdDate | date: 'yyyy/MM/dd' }}</div>
-            <span class="badge" [ngClass]="getCategoryBadgeClass(newsItem.postCategories[0]?.categoryName || '')" *ngIf="newsItem.postCategories && newsItem.postCategories.length > 0">
+            <span class="badge"
+                  [ngClass]="getCategoryBadgeClass(newsItem.postCategories[0]?.categoryName || '')"
+                  *ngIf="newsItem.postCategories && newsItem.postCategories.length > 0">
               {{ newsItem.postCategories[0]?.categoryName || 'Uncategorized' }}
             </span>
           </div>
           <h5 class="news-card-title">{{ newsItem.title }}</h5>
-          <!-- ✅ عرض المحتوى باستخدام innerHTML + cleanHtml -->
           <div class="news-card-excerpt quill-content description"
                [innerHTML]="(newsItem.content | cleanHtml) | slice:0:120">
           </div>

@@ -45,7 +45,11 @@ export class ProgramsService {
   // جلب برنامج واحد بالـ slug (جديدة)
   getProgramBySlug(slug: string): Observable<Program | undefined> {
     return this.getAllPrograms().pipe(
-      map(programs => programs.find(p => slugify(p.pageTitle) === slug))
+      map(programs => programs.find(p => {
+        // some items might not have a slug; fall back to pageTitle if available
+        const effectiveSlug = slugify(p.slug || p.pageTitle || '');
+        return effectiveSlug === slug;
+      }))
     );
   }
 

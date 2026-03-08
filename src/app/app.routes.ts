@@ -11,6 +11,7 @@ import { CentersComponent } from './core/features/Faculty-of-Medicine/Pages/cent
 import { UnitsComponent } from './core/features/Faculty-of-Medicine/Pages/units/units.component';
 import { ServicesComponent } from './core/features/Faculty-of-Medicine/Pages/services/services.component';
 import { AboutComponent } from './core/features/Faculty-of-Medicine/Pages/about/about.component';
+import { CustomPageTemplateComponent } from './core/features/Faculty-of-Medicine/Pages/shared/custom-page-template/custom-page-template.component';
 
 export const routes: Routes = [
   {
@@ -19,16 +20,21 @@ export const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
+    //  { path: 'sectors', component: SectorsComponent },
       { path: 'sectors/:slug', component: SectorsComponent },
       { path: 'news', component: NewsListComponent },
       { path: 'news/:slug', component: NewsDetailsComponent },
       { path: 'departments/:slug', component: DepartmentsComponent },
+            // { path: 'departments', component: DepartmentsComponent },
+
       { path: 'programs/:slug', component: ProgramsComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'centers/:slug', component: CentersComponent },
       { path: 'units/:slug', component: UnitsComponent },
       { path: 'services/:slug', component: ServicesComponent },
-      { path: 'about', component: AboutComponent }
+      { path: 'about', component: AboutComponent },
+       { path: 'custom', component: CustomPageTemplateComponent },
+      { path: 'custom/:slug', component: CustomPageTemplateComponent },
     ]
   }
 ];

@@ -42,3 +42,5 @@ export interface Member {
   memberType: string; // President, Sector, Center, Unit, Program, Department
   memberAttachments: MemberAttachment[];
 }
+
+

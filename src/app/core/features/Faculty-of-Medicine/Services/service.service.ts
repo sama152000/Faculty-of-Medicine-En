@@ -21,17 +21,21 @@ export class ServiceService {
     );
   }
 
-  // جلب خدمة واحدة بالـ id (قديمة)
+  // جلب خدمة واحدة بالـ id
   getById(id: string): Observable<ServiceDetail | undefined> {
     return this.getAll().pipe(
       map(services => services.find(s => s.id === id))
     );
   }
 
-  // جلب خدمة واحدة بالـ slug (جديدة)
+  // جلب خدمة واحدة بالـ slug
   getBySlug(slug: string): Observable<ServiceDetail | undefined> {
     return this.getAll().pipe(
-      map(services => services.find(s => slugify(s.title) === slug))
+      map(services => services.find(s => {
+        // build slug from property or title
+        const effectiveSlug = slugify(s.slug || s.title || '');
+        return effectiveSlug === slug;
+      }))
     );
   }
 }

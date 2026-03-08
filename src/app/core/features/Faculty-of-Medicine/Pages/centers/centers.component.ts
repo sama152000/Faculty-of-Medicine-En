@@ -5,10 +5,11 @@ import { CentersService } from '../../Services/centers.service';
 import { Center, CenterDetail, CenterMember } from '../../model/center.model';
 import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
+
 @Component({
   selector: 'app-centers',
   standalone: true,
-  imports: [CommonModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
+  imports: [CommonModule, CleanHtmlPipe],
   templateUrl: './centers.component.html',
   styleUrls: ['./centers.component.css']
 })

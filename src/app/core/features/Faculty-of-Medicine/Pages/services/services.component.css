@@ -1,51 +1,484 @@
-.sector-header {
-  border-radius: 8px;
-  text-align: center;
+/* ========================================
+   Services Page CSS
+   ======================================== */
+
+/* Section Container */
+.section {
+  padding: 2rem 0;
 }
 
-h1{
-    color: black;
+/* Page Header */
+.sector-header {
+  border-radius: 12px;
+  text-align: center;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sector-header h1 {
+  color: var(--medicine-primary-brown);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+/* Services List View */
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.service-card {
+  background: var(--medicine-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: var(--transition-normal);
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid var(--medicine-light-gray);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--medicine-primary-red);
+}
+
+.service-card-body {
+  padding: 1.5rem;
+}
+
+.service-card-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--medicine-primary-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.service-card-icon i {
+  color: var(--medicine-white);
+  font-size: 1.5rem;
+}
+
+.service-card-title {
+  color: var(--medicine-primary-brown);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.service-card-preview {
+  color: var(--medicine-dark-gray);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.service-card-footer {
+  padding: 1rem 1.5rem;
+  background: var(--medicine-light-gray);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.service-card-link {
+  color: var(--medicine-primary-red);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-card-link:hover {
+  color: var(--medicine-primary-red-light);
+}
+
+/* Tabs */
+.medicine-tabs {
+  margin-bottom: 1.5rem;
+}
+
+.medicine-tabs .nav-tabs {
+  border-bottom: 2px solid var(--medicine-light-gray);
 }
 
 .medicine-tabs .nav-link {
-  cursor: pointer;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--medicine-dark-gray);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: var(--transition-normal);
 }
 
+.medicine-tabs .nav-link:hover {
+  color: var(--medicine-primary-red);
+  background: transparent;
+  border-color: transparent;
+}
+
+.medicine-tabs .nav-link.active {
+  background: transparent;
+  color: var(--medicine-primary-red);
+  border-bottom-color: var(--medicine-primary-red);
+}
+
+/* Detail View Card */
+.service-detail-card {
+  background: var(--medicine-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--medicine-light-gray);
+  overflow: hidden;
+}
+
+.service-detail-header {
+  background: linear-gradient(135deg, var(--medicine-primary-red), var(--medicine-primary-red-dark));
+  padding: 2rem;
+  color: var(--medicine-white);
+}
+
+.service-detail-header h2 {
+  color: var(--medicine-white);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.service-detail-body {
+  padding: 2rem;
+}
+
+/* Service Description Content */
+.service-description {
+  line-height: 1.8;
+  color: var(--medicine-dark-gray);
+}
+
+.service-description p {
+  margin-bottom: 1rem;
+}
+
+/* Tables in Description */
+.service-description table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dee2e6;
+}
+
+.service-description table thead {
+  background: linear-gradient(135deg, var(--medicine-primary-red), var(--medicine-primary-red-dark));
+  color: var(--medicine-white);
+}
+
+.service-description table th,
+.service-description table td {
+  padding: 14px 18px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Table Row Styles */
+.service-description table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.service-description table tbody tr:nth-of-type(even) {
+  background-color: var(--medicine-light-gray);
+}
+
+.service-description table tbody tr:hover {
+  background-color: #ffeaea;
+}
+
+.service-description table tbody tr:last-child td {
+  border-bottom: 3px solid var(--medicine-primary-red);
+}
+
+/* Table Data Cell Styles */
+.service-description table td {
+  font-size: 0.95rem;
+  color: var(--medicine-dark-gray);
+  /* background-color: var(--medicine-white); */
+}
+
+/* Cells with data-row attribute */
+.service-description table td[data-row] {
+  font-weight: 500;
+}
+
+/* First column (Day names) - like السبت، الاثنين، etc. */
+.service-description table tbody tr td:first-child {
+  font-weight: 700;
+  color: var(--medicine-primary-brown);
+  /* background-color: rgba(183, 28, 28, 0.08); */
+  min-width: 120px;
+  border-left: 2px solid var(--medicine-primary-red);
+}
+
+/* Second column (Specialty) */
+.service-description table tbody tr td:nth-child(2) {
+  color: var(--medicine-dark-gray);
+}
+
+/* Third column (Time slots) - contains ص (AM) and م (PM) */
+.service-description table tbody tr td:last-child {
+  direction: ltr;
+  text-align: center;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  color: var(--medicine-primary-red);
+  font-weight: 700;
+  font-size: 0.9rem;
+  /* background-color: rgba(183, 28, 28, 0.05); */
+  white-space: nowrap;
+  border-right: 2px solid var(--medicine-primary-red);
+}
+
+/* Header cells styling */
+.service-description table thead th {
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 16px;
+  border-bottom: 3px solid var(--medicine-primary-red-dark);
+}
+
+/* Strong text in tables */
+.service-description table strong {
+  color: var(--medicine-primary-red);
+  font-weight: 700;
+}
+
+/* Lists in Description */
+.service-description ol,
+.service-description ul {
+  padding-right: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-description li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.service-description li::marker {
+  color: var(--medicine-primary-red);
+  font-weight: 600;
+}
+
+/* Back Button */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--medicine-primary-red);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--medicine-primary-red);
+  border-radius: 25px;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-normal);
+}
+
+.back-link:hover {
+  background: var(--medicine-primary-red);
+  color: var(--medicine-white);
+}
+
+/* Loading & Empty States */
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--medicine-dark-gray);
+}
+
+.empty-state {
+  color: var(--medicine-dark-gray);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: var(--medicine-light-gray);
+  margin-bottom: 1rem;
+}
+
+/* Service Icon Box */
+.service-icon-box {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--medicine-primary-red), var(--medicine-primary-red-light));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3);
+}
+
+.service-icon-box i {
+  font-size: 2rem;
+  color: var(--medicine-white);
+}
+
+/* List Group Items */
 .list-group-item {
   border: 1px solid #dee2e6;
   transition: var(--transition-normal);
+  cursor: pointer;
+  padding: 1rem 1.25rem;
 }
 
 .list-group-item:hover {
   background-color: var(--medicine-light-gray);
   color: var(--medicine-primary-red);
+  border-color: var(--medicine-primary-red);
 }
 
 .list-group-item.active {
   background-color: var(--medicine-primary-red);
   border-color: var(--medicine-primary-red);
+  color: var(--medicine-white);
 }
 
+/* Card Styles */
 .card {
   border: 1px solid #e9ecef;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: var(--medicine-white);
 }
 
 .card-body {
   padding: 2rem;
 }
 
-@media (max-width: 768px) {
-  .card-body {
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .services-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .service-detail-body {
     padding: 1.5rem;
   }
-  
-  .sector-header {
-    text-align: center;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 1rem 0;
   }
-  
+
+  .sector-header {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
   .sector-header h1 {
     font-size: 1.5rem;
   }
+
+  .services-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-detail-header {
+    padding: 1.5rem;
+  }
+
+  .service-detail-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .service-detail-body {
+    padding: 1rem;
+  }
+
+  .medicine-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .service-card-body {
+    padding: 1.25rem;
+  }
+
+  /* Table responsive */
+  .service-description table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .service-description table th,
+  .service-description table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
 }
+
+@media (max-width: 576px) {
+  .service-detail-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .service-icon-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .service-icon-box i {
+    font-size: 1.5rem;
+  }
+
+  .service-card-title {
+    font-size: 1.1rem;
+  }
+
+  .back-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3) { animation-delay: 0.3s; }
+.service-card:nth-child(4) { animation-delay: 0.4s; }
+.service-card:nth-child(5) { animation-delay: 0.5s; }
+.service-card:nth-child(6) { animation-delay: 0.6s; }

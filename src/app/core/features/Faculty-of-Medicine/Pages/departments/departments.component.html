@@ -7,8 +7,7 @@
   <!-- Horizontal Tabs -->
   <div class="medicine-tabs">
     <ul class="nav nav-tabs">
-      <!-- About & Details Tabs -->
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <button class="nav-link" [class.active]="activeTab === 'about'" (click)="switchTab('about')" type="button">
           About the Department
         </button>
@@ -17,8 +16,7 @@
         <button class="nav-link" [class.active]="activeTab === 'details'" (click)="switchTab('details')" type="button">
           Department Details
         </button>
-      </li> -->
-      <!-- Programs Tab -->
+      </li>
       <!-- <li class="nav-item">
         <button class="nav-link" [class.active]="activeTab === 'programs'" (click)="switchTab('programs')" type="button">
           Department Programs
@@ -38,12 +36,12 @@
   </div>
 
   <!-- Content Area -->
-  <!-- <div class="row"> -->
+  <div class="row">
     <!-- About Tab Content -->
-    <!-- <div *ngIf="activeTab === 'about'" class="col-12">
+    <div *ngIf="activeTab === 'about'" class="col-12">
       <div class="row">
-
-        <!-- <div class="col-md-3 mb-4">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
           <div class="list-group">
             <button type="button" class="list-group-item list-group-item-action"
               [class.active]="activeAboutSection === 'overview'" (click)="switchAboutSection('overview')">
@@ -58,18 +56,14 @@
               Mission
             </button>
             <button type="button" class="list-group-item list-group-item-action"
-              [class.active]="activeAboutSection === 'history'" (click)="switchAboutSection('history')">
-              History
-            </button>
-            <button type="button" class="list-group-item list-group-item-action"
               [class.active]="activeAboutSection === 'objectives'" (click)="switchAboutSection('objectives')">
               Objectives
             </button>
           </div>
-        </div>  -->
+        </div>
 
         <!-- Content -->
-        <!-- <div class="col-md-9">
+        <div class="col-md-9">
           <div class="card">
             <div class="card-body">
               <div *ngIf="activeAboutSection === 'overview'">
@@ -90,8 +84,6 @@
                      [innerHTML]="department?.mission | cleanHtml"></div>
               </div>
 
-           
-
               <div *ngIf="activeAboutSection === 'objectives'">
                 <h3 class="text-brown mb-3">Objectives</h3>
                 <ul>
@@ -101,24 +93,27 @@
             </div>
           </div>
         </div>
-      </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
 
     <!-- Details Tab Content -->
-    <!-- <div *ngIf="activeTab === 'details'" class="col-12">
-      <div class="card" *ngIf="departmentDetail?.title || departmentDetail?.content">
+    <div *ngIf="activeTab === 'details'" class="col-12">
+      <div class="card">
         <div class="card-body">
           <h3 class="text-brown mb-3">{{ departmentDetail?.title }}</h3>
           <div class="quill-content description"
-               [innerHTML]="departmentDetail?.content | cleanHtml"></div>
+               [innerHTML]="departmentDetail?.content | cleanHtml"></div>       
+          <div *ngIf="!departmentDetail">
+            <p>No information available about the department.</p>
+          </div>
         </div>
       </div>
-      <p *ngIf="!departmentDetail?.title && !departmentDetail?.content">No information available.</p>
-    </div> -->
+    </div>
 
     <!-- Programs Tab Content -->
-    <!-- <div *ngIf="activeTab === 'programs'" class="col-12">
+    <div *ngIf="activeTab === 'programs'" class="col-12">
       <div class="row">
+        <!-- Sidebar -->
         <div class="col-md-3 mb-4">
           <div class="list-group">
             <button type="button" class="list-group-item list-group-item-action"
@@ -129,6 +124,8 @@
             </button>
           </div>
         </div>
+
+        <!-- Content -->
         <div class="col-md-9">
           <div class="card" *ngIf="selectedProgram">
             <div class="card-body">
@@ -140,7 +137,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Services Tab Content -->
     <div *ngIf="activeTab === 'services'" class="col-12">
@@ -203,3 +200,6 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>

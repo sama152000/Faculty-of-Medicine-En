@@ -71,7 +71,7 @@ export class SectorsService {
   // جلب قطاع واحد بالـ slug (جديدة)
   getSectorBySlug(slug: string): Observable<Sector | undefined> {
     return this.getAllSectors().pipe(
-      map(sectors => sectors.find(s => slugify(s.name) === slug))
+      map(sectors => sectors.find(s => slugify(s.slug || '') === slug))
     );
   }
 

@@ -10,7 +10,7 @@ import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ است
 @Component({
   selector: 'app-departments',
   standalone: true,
-  imports: [CommonModule, RouterModule, CleanHtmlPipe], // ✅ أضفنا الـ Pipe هنا
+  imports: [CommonModule, RouterModule, CleanHtmlPipe],
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css']
 })
@@ -21,8 +21,8 @@ export class DepartmentsComponent implements OnInit {
   departmentServices: DepartmentService[] = [];
   departmentMembers: DepartmentMember[] = [];
 
-  activeTab = 'services';
-  activeAboutSection = 'services';
+  activeTab = 'about';
+  activeAboutSection = 'overview';
   selectedProgram?: DepartmentProgram;
   selectedService?: DepartmentService;
 

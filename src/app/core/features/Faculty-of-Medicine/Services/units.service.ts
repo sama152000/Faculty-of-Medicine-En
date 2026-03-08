@@ -45,7 +45,11 @@ export class UnitsService {
   // جلب وحدة واحدة بالـ slug (جديدة)
   getUnitBySlug(slug: string): Observable<Unit | undefined> {
     return this.getAllUnits().pipe(
-      map(units => units.find(u => slugify(u.unitTitle) === slug))
+      map(units => units.find(u => {
+        // slug fallback using english title or arabic title
+        const effectiveSlug = slugify(u.slug || u.unitTitleEn || u.unitTitle || '');
+        return effectiveSlug === slug;
+      }))
     );
   }
 

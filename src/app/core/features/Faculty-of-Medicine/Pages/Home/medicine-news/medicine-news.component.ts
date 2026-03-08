@@ -14,9 +14,9 @@ import { slugify } from '../../../../../../utils/slugify';
 })
 export class MedicineNewsComponent implements OnInit {
   @Input() showTitle = true;
-@Input() sectionTitle = 'Latest News';
-  @Input() itemsPerView = 3;
-  @Input() isRTL = true;
+  @Input() sectionTitle = 'Latest News';   // ✅ ترجمة العنوان
+  @Input() itemsPerView = 6;
+  @Input() isRTL = false;                  // ✅ في النسخة الإنجليزية نخلي الاتجاه LTR
 
   newsItems: News[] = [];
   visibleItems: News[] = [];
@@ -32,12 +32,8 @@ export class MedicineNewsComponent implements OnInit {
   }
 
   private loadNews(): void {
-    this.newsService.getAllNews().subscribe(news => {
-      // ترتيب الأخبار حسب التاريخ واختيار آخر 3
-      this.newsItems = [...news].sort((a, b) =>
-        new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-      ).slice(0, this.itemsPerView);
-
+    this.newsService.getLatestNews(this.itemsPerView).subscribe(news => {
+      this.newsItems = news;
       this.visibleItems = this.newsItems;
     });
   }
@@ -46,13 +42,12 @@ export class MedicineNewsComponent implements OnInit {
     const date = new Date(dateString);
     return {
       day: date.getDate().toString(),
-      month: date.toLocaleString('en-EG', { month: 'short' })
+      month: date.toLocaleString('en-US', { month: 'short' }) // ✅ ترجمة الشهر للإنجليزي
     };
   }
 
- 
   goToNewsDetails(news: News): void {
-    // التوجيه بالـ slug بدل الـ id
+    // ✅ التوجيه بالـ slug بدل الـ id
     this.router.navigate(['/news', slugify(news.title)]);
   }
 }

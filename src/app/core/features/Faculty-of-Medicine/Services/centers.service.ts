@@ -45,7 +45,7 @@ export class CentersService {
   // جلب مركز واحد بالـ slug (جديدة)
   getBySlug(slug: string): Observable<Center | undefined> {
     return this.getAllCenters().pipe(
-      map(centers => centers.find(c => slugify(c.centerName) === slug))
+      map(centers => centers.find(c => slugify(c.slug || '') === slug))
     );
   }
 

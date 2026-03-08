@@ -16,6 +16,7 @@ export interface CenterAttachment {
 export interface Center {
   id: string;
   subTitle: string;
+  slug:string;
   place: string;
   pageId: string;
   centerName: string;

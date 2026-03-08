@@ -59,7 +59,11 @@ export class DepartmentsService {
   // جلب قسم واحد بالـ slug (جديدة)
   getDepartmentBySlug(slug: string): Observable<Department | undefined> {
     return this.getAllDepartments().pipe(
-      map(departments => departments.find(d => slugify(d.name) === slug))
+      map(departments => departments.find(d => {
+        // some departments may not have a slug from the API, so use the name as a fallback
+        const effectiveSlug = slugify(d.slug || d.name || '');
+        return effectiveSlug === slug;
+      }))
     );
   }
 
@@ -90,9 +94,11 @@ export class DepartmentsService {
       map(services => services.filter(s => s.departmentId === departmentId))
     );
   }
-  getDepartmentsByType(type: 'AcademicDepartments' | 'ClinicalDepartments'): Observable<Department[]> {
+  // جلب الأقسام حسب النوع (أكاديمية أو كلينيكية)
+getDepartmentsByType(type: 'AcademicDepartments' | 'ClinicalDepartments'): Observable<Department[]> {
   return this.getAllDepartments().pipe(
     map(departments => departments.filter(d => d.departmentType === type))
   );
 }
+
 }

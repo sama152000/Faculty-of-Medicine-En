@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: 'https://medicinecollegeen.runasp.net/api/v1/' ,
           apiBase: 'https://medicinecollegeen.runasp.net'
  

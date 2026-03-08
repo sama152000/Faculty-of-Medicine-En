@@ -1,0 +1,104 @@
+<section class="section" dir="rtl">
+  <div class="container">
+    
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>>Loading page...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="errorMessage && !isLoading">
+      <div class="alert alert-danger" role="alert">
+        <i class="fas fa-times-circle"></i>
+        {{ errorMessage }}
+      </div>
+    </div>
+    
+    <!-- Page Header -->
+    <div class="sector-header text-white p-4 mb-4 rounded" *ngIf="customPage && !isLoading">
+      <h1 class="text-brown">{{ customPage.pageTitle || customPage.subTitle  || 'Custom Page' }}</h1>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="medicine-tabs" *ngIf="customPage && (hasContent() || hasAttachments()) && !isLoading">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngIf="hasContent()">
+          <button 
+            class="nav-link" 
+            [class.active]="activeSection === 'content'"
+            (click)="switchSection('content')"
+            type="button"
+          >
+            Content
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="hasAttachments()">
+          <button 
+            class="nav-link" 
+            [class.active]="activeSection === 'attachments'"
+            (click)="switchSection('attachments')"
+            type="button"
+          >
+            Attachments
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Content Area -->
+    <div class="row" *ngIf="customPage && !isLoading">
+      
+      <!-- Content Section -->
+      <div *ngIf="activeSection === 'content' && hasContent()" class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- Subtitle -->
+            <h3 class="text-brown mb-3" *ngIf="customPage.subTitle">
+              {{ customPage.subTitle }}
+            </h3>
+            
+            <!-- Main Content -->
+            <div class="quill-content description" [innerHTML]="customPage.content | cleanHtml"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attachments Section -->
+      <div *ngIf="activeSection === 'attachments' && hasAttachments()" class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="text-brown mb-3">
+              <i class="fas fa-paperclip me-2"></i>
+              Attachments
+            </h3>
+            
+            <div class="attachments-list">
+              <button 
+                *ngFor="let attachment of customPage.pageAttachments"
+                class="attachment-btn"
+                (click)="downloadAttachment(attachment)"
+                type="button"
+              >
+                <i [ngClass]="getFileIcon(attachment.fileName)" class="attachment-icon"></i>
+                <span class="attachment-name">{{ attachment.fileName }}</span>
+                <i class="fas fa-download download-icon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!customPage && !isLoading && !errorMessage">
+      <div class="empty-state-content">
+        <i class="fas fa-folder-open empty-icon"></i>
+        <h3 class="empty-title text-brown">No data currently available</h3>
+        <p class="empty-message">Content will be updated soon</p>
+      </div>
+    </div>
+    
+  </div>
+</section>

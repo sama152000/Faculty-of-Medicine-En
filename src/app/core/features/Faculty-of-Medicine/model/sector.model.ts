@@ -25,6 +25,7 @@ export interface Sector {
   subTitle: string;
   pageId: string;
   pageTitle: string;
+  slug: string;
   aboutId: string;
   about: string;
   mission: string;
@@ -69,6 +70,19 @@ export interface SectorProgram {
   sectorName: string;
   programId: string;
   programName?: string | null;
+  slug: string;
+}
+
+// المرفقات الخاصة بالخدمة
+export interface SectorServiceAttachment {
+  id: string;
+  fileName: string;
+  isPublic: boolean;
+  relativePath: string;
+  folderName: string;
+  url: string;
+  isFeatured: boolean;
+  sectorServiceId: string;
 }
 
 // الخدمات التابعة للقطاع
@@ -86,6 +100,7 @@ export interface SectorService {
   contactPhone: string;
   sectorId: string;
   sectorName: string;
+  sectorServiceAttachments?: SectorServiceAttachment[];
 }
 
 
@@ -105,4 +120,5 @@ export interface SectorUnit {
   managementName?: string;
   sectorId: string;
   sectorName: string;
+  slug: string;
 }

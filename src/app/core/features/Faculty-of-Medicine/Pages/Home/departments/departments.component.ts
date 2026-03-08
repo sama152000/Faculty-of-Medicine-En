@@ -54,6 +54,6 @@ export class DepartmentsComponent implements OnInit {
 
   onDepartmentClick(department: Department): void {
     this.departmentClicked.emit(department);
-    this.router.navigate(['/departments', slugify(department.name)]);
+    this.router.navigate(['/departments', slugify(department.pageTitle)]);
   }
 }

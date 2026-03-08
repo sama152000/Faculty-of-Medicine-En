@@ -7,7 +7,7 @@ import { NewsService } from '../../Services/news.service';
 import { Sector, SectorDetail, SectorMember, SectorProgram, SectorService, SectorPost, SectorUnit } from '../../model/sector.model';
 import { News } from '../../model/news.model';
  import { slugify } from '../../../../../../../src/app/utils/slugify';
- import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+  import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
 
 @Component({
@@ -24,7 +24,7 @@ export class SectorsComponent implements OnInit {
   sectorPrograms: SectorProgram[] = [];
   sectorServices: SectorService[] = [];
   sectorPosts: News[] = [];
- sectorUnits: SectorUnit[] = [];
+sectorUnits: SectorUnit[] = [];
   activeTab = 'about';
   activeAboutSection = 'overview';
   selectedProgram?: SectorProgram;
@@ -90,8 +90,8 @@ export class SectorsComponent implements OnInit {
         });
 
         this.sectorsService.getSectorUnitsById(sectorId).subscribe(units => {
-          this.sectorUnits = units;
-        });
+  this.sectorUnits = units;
+});
 
       }
     });
@@ -114,21 +114,21 @@ export class SectorsComponent implements OnInit {
   }
 
 
- goToPostDetails(post: News): void {
-    this.router.navigate(['/news', slugify(post.title)]).then(() => {
-      window.scrollTo(0, 0);
-    });
- }
+goToPostDetails(post: News): void {
+  this.router.navigate(['/news', slugify(post.title)]).then(() => {
+    window.scrollTo(0, 0);
+  });
+}
 
- goToProgramDetails(program: SectorProgram): void {
-    this.router.navigate(['/programs', slugify(program.name)]).then(() => {
-      window.scrollTo(0, 0);
-    });
- }
+goToProgramDetails(program: SectorProgram): void {
+  this.router.navigate(['/programs',slugify(program.slug)]).then(() => {
+    window.scrollTo(0, 0);
+  });
+}
 
- goTounitDetails(unit: SectorUnit): void {
-    this.router.navigate(['/units', slugify(unit.unitName)]).then(() => {
-      window.scrollTo(0, 0);
-    });
- }
+goTounitDetails(unit: SectorUnit): void {
+  this.router.navigate(['/units', slugify(unit.slug)]).then(() => {
+    window.scrollTo(0, 0);
+  });
+}
 }

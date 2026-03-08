@@ -5,7 +5,6 @@ import { NewsService } from '../../../Services/news.service';
 import { News } from '../../../model/news.model';
 import { slugify } from '../../../../../../utils/slugify';
 
-
 @Component({
   selector: 'app-conference-upcoming',
   standalone: true,
@@ -14,7 +13,7 @@ import { slugify } from '../../../../../../utils/slugify';
   styleUrls: ['./conferences.component.css']
 })
 export class ConferenceUpcomingComponent implements OnInit {
-  @Input() sectionTitle = 'Upcoming Conferences';
+  @Input() sectionTitle = 'Upcoming Conferences'; // ✅ ترجمة العنوان
 
   conferences: News[] = [];
 
@@ -25,20 +24,19 @@ export class ConferenceUpcomingComponent implements OnInit {
   }
 
   private loadUpcomingConferences(): void {
-    this.newsService.getAllNews().subscribe(allNews => {
-      // Filter news by category "Conferences & Events"
-      const conferencesOnly = allNews.filter(n =>
-        n.postCategories.some(c => c.categoryName.includes('Conferences'))
-      );
-
-      // Sort by date and select the latest 3
-      this.conferences = [...conferencesOnly].sort((a, b) =>
-        new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-      ).slice(0, 3);
+    // ✅ ترجمة الفئة من "مؤتمرات" → "Conferences"
+    this.newsService.getLatestNewsByCategory('Conferences', 3).subscribe(conferences => {
+      this.conferences = conferences;
     });
   }
-   goToConferenceDetails(conference: News): void {
-    // التوجيه بالـ slug بدل الـ id
+
+  goToConferenceDetails(conference: News): void {
+    // ✅ التوجيه بالـ slug بدل الـ id
     this.router.navigate(['/news', slugify(conference.title)]);
+  }
+
+  goToNewsPage(): void {
+    // ✅ تعديل الفلتر للإنجليزي
+    this.router.navigate(['/news'], { queryParams: { filter: 'Conferences' } });
   }
 }

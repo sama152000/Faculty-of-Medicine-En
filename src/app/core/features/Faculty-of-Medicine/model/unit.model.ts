@@ -18,6 +18,7 @@ export interface Unit {
   pageId: string;
   unitTitle: string;
   unitTitleEn: string;
+  slug: string;
   aboutId: string;
   content: string;
   mission: string;
