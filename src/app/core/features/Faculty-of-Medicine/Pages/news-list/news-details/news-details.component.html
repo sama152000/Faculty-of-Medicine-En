@@ -1,64 +1,152 @@
 <div class="container section">
-  <div class="row" *ngIf="news">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-brown" role="status">
+      <span class="visually-hidden">Loading ...</span>
+    </div>
+  </div>
+
+  <!-- Article -->
+  <div class="row" *ngIf="!isLoading && news">
+
     <!-- Main Content -->
     <div class="col-lg-8 mb-4">
       <article class="news-article">
+
         <!-- Article Header -->
         <header class="article-header mb-4">
-          <div class="mb-3">
-            <span class="badge" [ngClass]="getCategoryBadgeClass(news.postCategories[0]?.categoryName || '')" *ngIf="news.postCategories && news.postCategories.length > 0">
-              {{ news.postCategories[0]?.categoryName || 'Uncategorized' }}
+          <!-- Category Badge -->
+          <div class="mb-3" *ngIf="news.postCategories && news.postCategories.length > 0">
+            <span
+              *ngFor="let cat of news.postCategories"
+              class="badge me-1"
+              [ngClass]="getCategoryBadgeClass(cat.categoryName)">
+              {{ cat.categoryName }}
             </span>
           </div>
+
           <h1 class="article-title text-brown">{{ news.title }}</h1>
-          <div class="article-meta text-muted">
-            <span class="me-3">
-              <i class="fas fa-calendar-alt"></i>
-              {{ news.createdDate | date: 'yyyy/MM/dd' }}
+
+          <!-- Meta: date + views -->
+          <div class="article-meta text-muted d-flex flex-wrap gap-3 mt-2">
+            <span>
+              <i class="fas fa-calendar-alt me-1"></i>
+              {{ (news.publishedDate ?? news.createdDate) | date: 'yyyy/MM/dd' }}
+            </span>
+            <span *ngIf="news.totalViewCount !== undefined">
+              <i class="fas fa-eye me-1"></i>
+              {{ news.totalViewCount }} Views
             </span>
           </div>
         </header>
 
-        <!-- Article Image -->
-        <div class="article-image mb-4" *ngIf="news.featuredImagePath">
+        <!-- Featured Image -->
+        <!-- <div class="article-image mb-4" *ngIf="news.featuredImagePath">
           <img [src]="news.featuredImagePath" [alt]="news.title" class="img-fluid rounded">
-        </div>
+        </div> -->
+
+
+         <!-- Image Slider -->
+          <div class="article-slider mt-4"
+               *ngIf="sliderImages.length > 0">
+
+            <!-- Single image: just show it, no slider chrome needed -->
+            <ng-container *ngIf="sliderImages.length === 1">
+              <img
+                [src]="sliderImages[0]"
+                [alt]="news.title"
+                class="img-fluid rounded slider-main-img">
+            </ng-container>
+
+            <!-- Multiple images: full slider -->
+            <ng-container *ngIf="sliderImages.length > 1">
+
+              <!-- Main slide -->
+              <div class="slider-main-wrapper">
+                <button class="slider-btn slider-btn-prev" (click)="prevSlide()" aria-label="Previous">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="slider-main-img-wrapper">
+                  <img
+                    *ngFor="let url of sliderImages; let i = index"
+                    [src]="url"
+                    [alt]="news.title"
+                    class="slider-main-img"
+                    [class.active]="i === currentSlideIndex">
+                </div>
+
+                <button class="slider-btn slider-btn-next" (click)="nextSlide()" aria-label="Next">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <!-- Counter -->
+                <div class="slider-counter">
+                  {{ currentSlideIndex + 1 }} / {{ sliderImages.length }}
+                </div>
+              </div>
+
+              <!-- Thumbnails strip -->
+              <div class="slider-thumbs">
+                <div
+                  *ngFor="let url of sliderImages; let i = index"
+                  class="slider-thumb"
+                  [class.active]="i === currentSlideIndex"
+                  (click)="goToSlide(i)">
+                  <img [src]="url" [alt]="news.title">
+                </div>
+              </div>
+
+            </ng-container>
+          </div>
 
         <!-- Article Content -->
         <div class="article-content">
           <div class="content-body quill-content description"
-     [innerHTML]="news.content | cleanHtml">
-</div>
+               [innerHTML]="news.content | cleanHtml">
+          </div>
+
+         
 
           <!-- Tags -->
-          <div class="article-tags mt-4" *ngIf="news.tags && news.tags.length > 0">
-            <strong class="me-2">Keywords:</strong>
-            <span class="badge bg-light text-dark me-1" *ngFor="let tag of news.tags">
-              {{ tag }}
+          <div class="article-tags mt-4"
+               *ngIf="news.tags && news.tags.length > 0">
+            <strong class="me-2">Key Words:</strong>
+            <span
+              class="badge bg-light text-dark me-1"
+              *ngFor="let tag of news.tags">
+              {{ tag.name }}
             </span>
           </div>
         </div>
+
       </article>
     </div>
 
     <!-- Sidebar -->
     <div class="col-lg-4">
       <aside class="news-sidebar">
-        <!-- Navigation Links -->
+
+        <!-- Navigation -->
         <div class="sidebar-section mb-4">
           <h5 class="sidebar-title">Browse News</h5>
           <div class="list-group">
             <button class="list-group-item list-group-item-action" (click)="goToNewsList()">
-              <i class="fas fa-arrow-right me-2"></i>
+              <i class="fas fa-arrow-left me-2"></i>
               Back to News List
             </button>
-            
-            <button class="list-group-item list-group-item-action" *ngIf="previousNews" (click)="goToNewsDetails(previousNews)">
+            <button
+              class="list-group-item list-group-item-action"
+              *ngIf="previousNews"
+              (click)="goToNewsDetails(previousNews)">
               <i class="fas fa-chevron-right me-2"></i>
               Previous News
             </button>
-            
-            <button class="list-group-item list-group-item-action" *ngIf="nextNews" (click)="goToNewsDetails(nextNews)">
+            <button
+              class="list-group-item list-group-item-action"
+              *ngIf="nextNews"
+              (click)="goToNewsDetails(nextNews)">
               <i class="fas fa-chevron-left me-2"></i>
               Next News
             </button>
@@ -69,30 +157,44 @@
         <div class="sidebar-section" *ngIf="relatedNews.length > 0">
           <h5 class="sidebar-title">Related News</h5>
           <div class="related-news">
-            <div class="related-news-item" *ngFor="let relatedItem of relatedNews" (click)="goToNewsDetails(relatedItem)">
+            <div
+              class="related-news-item"
+              *ngFor="let relatedItem of relatedNews"
+              (click)="goToNewsDetails(relatedItem)">
               <div class="row g-2">
                 <div class="col-4" *ngIf="relatedItem.featuredImagePath">
-                  <img [src]="relatedItem.featuredImagePath" [alt]="relatedItem.title" class="img-fluid rounded">
+                  <img
+                    [src]="relatedItem.featuredImagePath"
+                    [alt]="relatedItem.title"
+                    class="img-fluid rounded">
                 </div>
                 <div [class]="relatedItem.featuredImagePath ? 'col-8' : 'col-12'">
                   <h6 class="related-title">{{ relatedItem.title }}</h6>
-                  <small class="text-muted">{{ relatedItem.createdDate | date: 'yyyy/MM/dd' }}</small>
+                  <small class="text-muted">
+                    {{ (relatedItem.publishedDate ?? relatedItem.createdDate) | date: 'yyyy/MM/dd' }}
+                  </small>
+                  <div *ngIf="relatedItem.totalViewCount !== undefined" class="text-muted small mt-1">
+                 {{ relatedItem.totalViewCount }}
+                    <i class="fas fa-eye me-1"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </aside>
     </div>
   </div>
 
-  <!-- Error State -->
-  <div *ngIf="newsNotFound" class="text-center py-5">
+  <!-- Not Found State -->
+  <div *ngIf="!isLoading && newsNotFound" class="text-center py-5">
     <div class="text-muted">
       <i class="fas fa-exclamation-triangle fa-3x mb-3 text-warning"></i>
       <h4>News Not Found</h4>
-      <p>Sorry, the requested news could not be found.</p>
+      <p>Sorry, the requested news item was not found.</p>
       <button class="btn btn-medicine" (click)="goToNewsList()">Back to News List</button>
     </div>
   </div>
+
 </div>

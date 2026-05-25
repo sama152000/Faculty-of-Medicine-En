@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin as rxForkJoin } from 'rxjs';
 import { ContactService } from '../../../Services/contact.service';
 import { NewsService } from '../../../Services/news.service';
 import { LogoService } from '../../../Services/logo.service';
@@ -10,6 +10,7 @@ import { FooterService } from '../../../Services/footer.service';
 import { DepartmentsService } from '../../../Services/departments.service';
 import { CentersService } from '../../../Services/centers.service';
 import { ServiceService } from '../../../Services/service.service';
+import { VisitorsService } from '../../../Services/visitors.service';
 import { Contact } from '../../../model/contact.model';
 import { News } from '../../../model/news.model';
 import { Logo } from '../../../model/logo.model';
@@ -31,6 +32,12 @@ export class MedicineFooterComponent implements OnInit {
   socialLinks: SocialLink[] = [];
   latestPosts: { slug: string; title: string; date: string; url: string }[] = [];
 
+  // Visitors stats
+  totalViews: number | null = null;
+  monthViews: number | null = null;
+  todayViews: number | null = null;
+  visitorsLoading = true;
+
   constructor(
     private contactService: ContactService,
     private newsService: NewsService,
@@ -38,7 +45,8 @@ export class MedicineFooterComponent implements OnInit {
     private footerService: FooterService,
     private departmentsService: DepartmentsService,
     private centersService: CentersService,
-    private serviceService: ServiceService
+    private serviceService: ServiceService,
+    private visitorsService: VisitorsService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +56,7 @@ export class MedicineFooterComponent implements OnInit {
     this.updateDepartmentLink();
     this.updateCentersLink();
     this.updateServicesLink();
+    this.loadVisitorsStats();
   }
 
   trackByFn(index: number, item: any): any {
@@ -70,7 +79,7 @@ export class MedicineFooterComponent implements OnInit {
           const dateB = b.publishedDate ? new Date(b.publishedDate).getTime() : 0;
           return dateB - dateA;
         })
-        .slice(0, 3)
+        .slice(0, 2)
       )
     ).subscribe((news: News[]) => {
       this.latestPosts = news.map(item => ({
@@ -130,15 +139,15 @@ export class MedicineFooterComponent implements OnInit {
     });
   }
 
- private getDefaultQuickLinks(): QuickLink[] {
-  return [
-    { id: '1', text: 'About the Faculty', url: '/about', icon: '→' },
-    { id: '2', text: 'Academic Departments', url: '/departments', icon: '→' },
-    { id: '4', text: 'Services', url: '/services', icon: '→' },
-    { id: '5', text: 'Contact Us', url: '/contact', icon: '→' }
-  ];
-}
-
+  private getDefaultQuickLinks(): QuickLink[] {
+    return [
+      { id: '1', text: 'About the Faculty', url: '/about', icon: '→' },
+      // { id: '2', text: 'الأقسام الأكاديمية', url: '/departments', icon: '→' },
+      // { id: '3', text: 'المراكز', url: '/centers', icon: '→' },
+      { id: '4', text: 'Services', url: '/services', icon: '→' },
+      { id: '5', text: 'Contact Us', url: '/contact', icon: '→' }
+    ];
+  }
 
   private loadLogo(): void {
     this.logoService.getDefaultLogo().subscribe((logo: Logo | undefined) => {
@@ -150,6 +159,25 @@ export class MedicineFooterComponent implements OnInit {
 
   onLinkClick(type: string, data: any): void {
     console.log(`Footer link clicked - Type: ${type}`, data);
+  }
+
+  private loadVisitorsStats(): void {
+    this.visitorsLoading = true;
+    rxForkJoin({
+      total: this.visitorsService.getTotalViews().pipe(catchError(() => of({ totalViews: 0 }))),
+      month: this.visitorsService.getMonthViews().pipe(catchError(() => of({ monthViews: 0 }))),
+      today: this.visitorsService.getTodayViews().pipe(catchError(() => of({ todayViews: 0 })))
+    }).subscribe({
+      next: ({ total, month, today }) => {
+        this.totalViews = total.totalViews;
+        this.monthViews = month.monthViews;
+        this.todayViews = today.todayViews;
+        this.visitorsLoading = false;
+      },
+      error: () => {
+        this.visitorsLoading = false;
+      }
+    });
   }
 
   scrollToTop(): void {

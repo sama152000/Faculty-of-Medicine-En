@@ -1,0 +1,51 @@
+.sector-header {
+  border-radius: 8px;
+  text-align: center;
+}
+
+h1 {
+  color: white;
+}
+
+.medicine-tabs .nav-link {
+  cursor: pointer;
+}
+
+.list-group-item {
+  border: 1px solid #dee2e6;
+  transition: var(--transition-normal);
+}
+
+.list-group-item:hover {
+  background-color: var(--medicine-light-gray);
+  color: var(--white);
+}
+
+.list-group-item.active {
+  background-color: var(--medicine-primary-red);
+  border-color: var(--medicine-primary-red);
+}
+
+.card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .sector-header {
+    text-align: center;
+  }
+
+  .sector-header h1 {
+    font-size: 1.5rem;
+  }
+}

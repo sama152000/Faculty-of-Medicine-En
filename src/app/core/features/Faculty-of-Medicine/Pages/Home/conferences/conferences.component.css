@@ -285,6 +285,28 @@
  .card-image {
    height: 200px;
    overflow: hidden;
+   position: relative;
+ }
+
+ .view-count-badge {
+   position: absolute;
+   bottom: 10px;
+   left: 10px;
+   background: rgba(0, 0, 0, 0.55);
+   color: #fff;
+   font-size: 0.85rem;
+   font-weight: 600;
+   padding: 4px 10px;
+   border-radius: 20px;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+   backdrop-filter: blur(4px);
+   z-index: 2;
+ }
+
+ .view-count-badge i {
+   font-size: 0.8rem;
  }
  
  .card-image img {
@@ -342,8 +364,7 @@
    font-weight: 600;
    font-size: 0.95rem;
    transition: color 0.3s ease;
-      cursor: pointer;
-
+   cursor: pointer;
  }
  
  .card-link:hover {

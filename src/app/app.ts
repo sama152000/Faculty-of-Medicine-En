@@ -1,10 +1,11 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnDestroy, OnInit, inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterModule } from "@angular/router";
 import { LoaderComponent } from './core/features/Faculty-of-Medicine/Pages/shared/loader/loader.component';
 import { LoaderService } from './core/features/Faculty-of-Medicine/Services/loader.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { LogoService } from './core/features/Faculty-of-Medicine/Services/logo.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,8 @@ export class App implements OnInit, OnDestroy {
 
   isLoading = false;
   loadingMessage = 'Loading...';
+    private logosService = inject(LogoService);
+  private document = inject(DOCUMENT);
   private destroy$ = new Subject<void>();
   
   constructor(private loaderService: LoaderService) {}
@@ -40,6 +43,25 @@ export class App implements OnInit, OnDestroy {
       .subscribe(message => {
         this.loadingMessage = message;
       });
+
+       // Set favicon from logo service
+    this.logosService.getDefaultLogo()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(logo => {
+        if (logo?.url) {
+          const favicon = this.document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+          if (favicon) {
+            favicon.href = logo.url;
+          } else {
+            const link = this.document.createElement('link');
+            link.rel = 'icon';
+            link.type = 'image/x-icon';
+            link.href = logo.url;
+            this.document.head.appendChild(link);
+          }
+        }
+      });
+  
   }
 
   ngOnDestroy() {

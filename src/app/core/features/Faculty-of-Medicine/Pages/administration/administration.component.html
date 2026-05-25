@@ -1,0 +1,148 @@
+<div class="container section">
+  <!-- Administration Title Section -->
+  <div class="sector-header text-white p-4 mb-4 rounded">
+    <h1 class="text-brown">{{ management?.managementTitle || 'Loading...' }}</h1>
+  </div>
+
+  <!-- Horizontal Tabs -->
+  <div class="medicine-tabs">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link" [class.active]="activeTab === 'about'" (click)="switchTab('about')" type="button">
+          About Management
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" [class.active]="activeTab === 'details'" (click)="switchTab('details')" type="button">
+          Management Details
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" [class.active]="activeTab === 'members'" (click)="switchTab('members')" type="button">
+          Management Members
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Content Area -->
+  <div class="row">
+
+    <!-- About Tab Content -->
+    <div *ngIf="activeTab === 'about'" class="col-12">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'overview'" (click)="switchAboutSection('overview')">
+               Overview
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'vision'" (click)="switchAboutSection('vision')">
+              Vision
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'mission'" (click)="switchAboutSection('mission')">
+              Mission
+            </button>
+            <button type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'objectives'" (click)="switchAboutSection('objectives')">
+              Objectives
+            </button>
+            <button *ngIf="management?.history" type="button" class="list-group-item list-group-item-action"
+              [class.active]="activeAboutSection === 'history'" (click)="switchAboutSection('history')">
+              History
+            </button>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+
+              <div *ngIf="activeAboutSection === 'overview'">
+                <h3 class="text-brown mb-3">Overview</h3>
+                <div *ngIf="management?.content" class="quill-content description"
+                  [innerHTML]="management?.content | cleanHtml"></div>
+                <p *ngIf="!management?.content">No information available about the management.</p>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'vision'">
+                <h3 class="text-brown mb-3">Vision</h3>
+                <div *ngIf="management?.vision" class="quill-content description"
+                  [innerHTML]="management?.vision | cleanHtml"></div>
+                <p *ngIf="!management?.vision">No vision information available.</p>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'mission'">
+                <h3 class="text-brown mb-3">Mission</h3>
+                <div *ngIf="management?.mission" class="quill-content description"
+                  [innerHTML]="management?.mission | cleanHtml"></div>
+                <p *ngIf="!management?.mission">No mission information available.</p>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'objectives'">
+                <h3 class="text-brown mb-3">Objectives</h3>
+                <ul *ngIf="management?.goals && management!.goals.length > 0">
+                  <li *ngFor="let goal of management?.goals">{{ goal.goalName }}</li>
+                </ul>
+                <p *ngIf="!management?.goals || management!.goals.length === 0">No objectives available.</p>
+              </div>
+
+              <div *ngIf="activeAboutSection === 'history'">
+                <h3 class="text-brown mb-3">History</h3>
+                <div *ngIf="management?.history" class="quill-content description"
+                  [innerHTML]="management?.history | cleanHtml"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Tab Content -->
+    <div *ngIf="activeTab === 'details'" class="col-12">
+      <div class="card" *ngIf="managementDetail?.title || managementDetail?.content || managementDetail?.description">
+        <div class="card-body">
+          <h3 class="text-brown mb-3">{{ managementDetail?.title }}</h3>
+          <p *ngIf="managementDetail?.description" class="mb-3">{{ managementDetail?.description }}</p>
+          <div *ngIf="managementDetail?.content" class="quill-content description mb-3"
+            [innerHTML]="managementDetail?.content | cleanHtml"></div>
+        </div>
+      </div>
+      <p *ngIf="!managementDetail?.title && !managementDetail?.content && !managementDetail?.description">
+       No information available about the management details.
+      </p>
+    </div>
+
+    <!-- Members Tab Content -->
+    <div *ngIf="activeTab === 'members'" class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-brown mb-3">Management Members</h3>
+
+          <div *ngIf="managementMembers && managementMembers.length > 0">
+            <div class="row">
+              <div class="col-md-6 mb-3" *ngFor="let member of managementMembers">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">{{ member.memberName }}</h6>
+                    <p><span *ngIf="member.isLeader">(Management Leader)</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!managementMembers || managementMembers.length === 0">
+            <p>No information available about management members.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

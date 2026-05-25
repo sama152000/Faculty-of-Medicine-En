@@ -108,7 +108,7 @@
 /* Search Input Styles */
 .search-wrapper {
   flex: 1;
-  min-width: 600px;
+  min-width: 250px;
   max-width: 800px;
 }
 
@@ -159,6 +159,8 @@
   .search-wrapper {
     width: 100%;
     max-width: none;
+        min-width: unset;
+
   }
 }
 

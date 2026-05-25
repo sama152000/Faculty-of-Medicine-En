@@ -6,10 +6,13 @@
   <div class="conference-card" *ngFor="let conference of conferences">
     <div class="card-image">
       <img [src]="conference.featuredImagePath" [alt]="conference.title" />
+      <span class="view-count-badge" *ngIf="conference.totalViewCount !== undefined">
+        {{ conference.totalViewCount }}<i class="fas fa-eye me-1"></i>
+      </span>
     </div>
     <div class="card-content">
       <h3 class="card-title">{{ conference.title | slice:0:100 }}</h3>
-      <p class="card-excerpt">{{ conference.content | slice:0:100 }}...</p>
+      <p class="card-excerpt" [innerHTML]="conference.content | cleanHtml | slice:0:100"></p>
       <div class="card-details">
         <div class="detail-item">
           <i class="fas fa-calendar-day"></i>

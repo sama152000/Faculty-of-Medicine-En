@@ -146,7 +146,7 @@
 }
 
 .statistic-card:hover .statistic-value {
-  color: var(--medicine-primary-red-light);
+  color: var(--medicine-white);
   transform: scale(1.05);
 }
 

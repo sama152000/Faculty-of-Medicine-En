@@ -12,6 +12,7 @@ import { UnitsComponent } from './core/features/Faculty-of-Medicine/Pages/units/
 import { ServicesComponent } from './core/features/Faculty-of-Medicine/Pages/services/services.component';
 import { AboutComponent } from './core/features/Faculty-of-Medicine/Pages/about/about.component';
 import { CustomPageTemplateComponent } from './core/features/Faculty-of-Medicine/Pages/shared/custom-page-template/custom-page-template.component';
+import { AdministrationComponent } from './core/features/Faculty-of-Medicine/Pages/administration/administration.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +24,7 @@ export const routes: Routes = [
     //  { path: 'sectors', component: SectorsComponent },
       { path: 'sectors/:slug', component: SectorsComponent },
       { path: 'news', component: NewsListComponent },
-      { path: 'news/:slug', component: NewsDetailsComponent },
+      { path: 'news/:id', component: NewsDetailsComponent },
       { path: 'departments/:slug', component: DepartmentsComponent },
             // { path: 'departments', component: DepartmentsComponent },
 
@@ -35,6 +36,9 @@ export const routes: Routes = [
       { path: 'about', component: AboutComponent },
        { path: 'custom', component: CustomPageTemplateComponent },
       { path: 'custom/:slug', component: CustomPageTemplateComponent },
+         { path: 'administrations', component: AdministrationComponent },
+      { path: 'administrations/:slug', component: AdministrationComponent },
+
     ]
   }
 ];

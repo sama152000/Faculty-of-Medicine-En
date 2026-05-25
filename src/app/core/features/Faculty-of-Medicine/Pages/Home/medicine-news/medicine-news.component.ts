@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { NewsService } from '../../../Services/news.service';
 import { News } from '../../../model/news.model';
-import { slugify } from '../../../../../../utils/slugify';
+import { CleanHtmlPipe } from '../../../../../pipes/clean-html.pipe';
 
 @Component({
   selector: 'app-medicine-news',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CleanHtmlPipe],
   templateUrl: './medicine-news.component.html',
   styleUrls: ['./medicine-news.component.css']
 })
 export class MedicineNewsComponent implements OnInit {
   @Input() showTitle = true;
-  @Input() sectionTitle = 'Latest News';   // ✅ ترجمة العنوان
+  @Input() sectionTitle = 'Latest News'; // ✅ ترجمة العنوان
   @Input() itemsPerView = 6;
-  @Input() isRTL = false;                  // ✅ في النسخة الإنجليزية نخلي الاتجاه LTR
+  @Input() isRTL = true;
 
   newsItems: News[] = [];
   visibleItems: News[] = [];
@@ -42,12 +42,11 @@ export class MedicineNewsComponent implements OnInit {
     const date = new Date(dateString);
     return {
       day: date.getDate().toString(),
-      month: date.toLocaleString('en-US', { month: 'short' }) // ✅ ترجمة الشهر للإنجليزي
+      month: date.toLocaleString('en-EG', { month: 'short' })
     };
   }
 
   goToNewsDetails(news: News): void {
-    // ✅ التوجيه بالـ slug بدل الـ id
-    this.router.navigate(['/news', slugify(news.title)]);
+    this.router.navigate(['/news', news.id]);
   }
 }

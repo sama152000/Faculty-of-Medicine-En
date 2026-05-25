@@ -6,7 +6,6 @@ import { NewsService } from '../../Services/news.service';
 import { CategoriesService } from '../../Services/categories.service';
 import { News } from '../../model/news.model';
 import { Category } from '../../model/category.model';
-import { slugify } from '../../../../../utils/slugify';
 import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe';
 
 @Component({
@@ -136,13 +135,13 @@ export class NewsListComponent implements OnInit {
   }
 
   getCategoryBadgeClass(categoryName: string): string {
-    if (categoryName === 'الأخبار') return 'badge-primary';
-    if (categoryName.includes('مؤتمرات')) return 'badge-success';
-    if (categoryName.includes('فعاليات') || categoryName.includes('احداث')) return 'badge-warning';
+    if (categoryName === 'News') return 'badge-primary';
+    if (categoryName.includes('Conferences')) return 'badge-success';
+    if (categoryName.includes('Events') || categoryName.includes('events')) return 'badge-warning';
     return 'badge-secondary';
   }
 
   goToNewsDetails(news: News): void {
-    this.router.navigate(['/news', slugify(news.title)]);
+    this.router.navigate(['/news', news.id]);
   }
 }
